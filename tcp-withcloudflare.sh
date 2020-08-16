@@ -7,7 +7,7 @@ export PATH
 #	Description: BBR+BBR魔改版+BBRplus+Lotserver
 #	Version: 1.3.2
 #	Author: 千影,cx9208
-#	Blog: https://www.94ish.me/
+#	Blog: http://www.94ish.me/
 #=================================================
 
 sh_ver="1.3.2"
@@ -55,7 +55,7 @@ installbbr(){
 installbbrplus(){
 	kernel_version="4.14.129-bbrplus"
 	if [[ "${release}" == "centos" ]]; then
-		wget -N --no-check-certificate https://${cache}/bbrplus/${release}/${version}/kernel-${kernel_version}.rpm
+		wget -N --no-check-certificate http://${cache}/bbrplus/${release}/${version}/kernel-${kernel_version}.rpm
 		yum install -y kernel-${kernel_version}.rpm
 		rm -f kernel-${kernel_version}.rpm
 		kernel_version="4.14.129_bbrplus" #fix a bug
@@ -168,7 +168,7 @@ startbbrmod_nanqinlang(){
 	if [[ "${release}" == "centos" ]]; then
 		yum install -y make gcc
 		mkdir bbrmod && cd bbrmod
-		wget -N --no-check-certificate https://${cache}/bbr/centos/tcp_nanqinlang.c
+		wget -N --no-check-certificate http://${cache}/bbr/centos/tcp_nanqinlang.c
 		echo "obj-m := tcp_nanqinlang.o" > Makefile
 		make -C /lib/modules/$(uname -r)/build M=`pwd` modules CC=/usr/bin/gcc
 		chmod +x ./tcp_nanqinlang.ko
@@ -185,7 +185,7 @@ startbbrmod_nanqinlang(){
 		fi
 		apt-get -y install make gcc-4.9
 		mkdir bbrmod && cd bbrmod
-		wget -N --no-check-certificate https://${cache}/bbr/tcp_nanqinlang.c
+		wget -N --no-check-certificate http://${cache}/bbr/tcp_nanqinlang.c
 		echo "obj-m := tcp_nanqinlang.o" > Makefile
 		make -C /lib/modules/$(uname -r)/build M=`pwd` modules CC=/usr/bin/gcc-4.9
 		install tcp_nanqinlang.ko /lib/modules/$(uname -r)/kernel
@@ -209,7 +209,7 @@ startlotserver(){
 		apt-get update
 		apt-get install ethtool
 	fi
-	bash <(wget --no-check-certificate -qO- https://${cache}/lotServer/master/Install.sh) install
+	bash <(wget --no-check-certificate -qO- http://${cache}/lotServer/master/Install.sh) install
 	sed -i '/advinacc/d' /appex/etc/config
 	sed -i '/maxmode/d' /appex/etc/config
 	echo -e "advinacc=\"1\"
@@ -257,7 +257,7 @@ remove_all(){
 	sed -i '/net.ipv4.tcp_timestamps/d' /etc/sysctl.conf
 	sed -i '/net.ipv4.tcp_max_orphans/d' /etc/sysctl.conf
 	if [[ -e /appex/bin/lotServer.sh ]]; then
-		bash <(wget --no-check-certificate -qO- https://${cache}/lotServer/Install.sh) uninstall
+		bash <(wget --no-check-certificate -qO- http://${cache}/lotServer/Install.sh) uninstall
 	fi
 	clear
 	echo -e "${Info}:清除加速完成。"
